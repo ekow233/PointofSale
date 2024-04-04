@@ -47,7 +47,7 @@ class PembelianController extends Controller
                 <div class="btn-group">
                     <button onclick="showDetail(`'. route('pembelian.show', $pembelian->id_pembelian) .'`)" class="btn btn-xs btn-primary btn-flat"><i class="fa fa-eye"></i></button>
                     <button onclick="deleteData(`'. route('pembelian.destroy', $pembelian->id_pembelian) .'`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
-                    <button onclick="distData(`'. route('pembelian.dist', $pembelian->id_pembelian) .'`)" class="btn btn-xs btn-primary btn-flat"><i class="fa fa-edit"></i></button>
+                    <button onclick="showBranch(`'. route('pembelian.dist', $pembelian->id_pembelian) .'`)" class="btn btn-xs btn-primary btn-flat"><i class="fa fa-edit"></i></button>
                 </div>
                 ';
             })
