@@ -31,7 +31,7 @@
                             <th width="5%">#</th>
                             <th>Code</th>
                             <th>Name</th>
-                            <th>kategori</th>
+                            <th>Category</th>
                             <th>Brand</th>
                             <th>Purchase Price</th>
                             <th>Selling Price</th>
@@ -47,11 +47,13 @@
 </div>
 
 @includeIf('produk.form')
+@includeIf('produk.branch')
 @endsection
 
 @push('scripts')
 <script>
     let table;
+    let distribution;
 
     $(function () {
         table = $('.table').DataTable({
@@ -129,6 +131,126 @@
                 alert('Unable to display data');
                 return;
             });
+    }
+
+    // distribution
+    // function showDistribution() {
+    //     console.log(distribution);
+    //     $('#modal-distribution').modal('show');
+
+    //     const tableDist = document.getElementById('distributionTable')
+
+    //     distribution.forEach(item => {
+    //         const row = document.createElement('tr');
+    //         row.innerHTML = `
+    //         <td style="border: 1px solid #ddd; padding: 8px;">${item.product}</td>
+    //         <td style="border: 1px solid #ddd; padding: 8px;">${item.branch}</td>
+    //         <td style="border: 1px solid #ddd; padding: 8px;">${item.stock}</td>`;
+
+    //         tableDist.appendChild(row);
+    //     })
+
+        
+    // }
+
+//     function showDistribution() {
+//     console.log(distribution);
+//     $('#modal-distribution').modal('show');
+
+//     const tableDist = document.getElementById('distributionTable');
+
+//     // Clear existing rows in the table
+//     $(document).on('hidden.bs.modal', '#modal-distribution', function () {
+//         tableDist.innerHTML = '';
+//     });
+
+//     distribution.forEach(item => {
+//         const row = document.createElement('tr');
+//         row.innerHTML = `
+//         <td style="border: 1px solid #ddd; padding: 8px;">${item.product}</td>
+//         <td style="border: 1px solid #ddd; padding: 8px;">${item.branch}</td>
+//         <td style="border: 1px solid #ddd; padding: 8px;">${item.stock}</td>`;
+
+//         tableDist.appendChild(row);
+//     });
+// }
+
+function showDistribution() {
+    console.log(distribution);
+    $('#modal-distribution').modal('show');
+
+    const tableDist = document.getElementById('distributionTable');
+
+    // Clear existing rows in the table
+    $(document).on('hidden.bs.modal', '#modal-distribution', function () {
+        tableDist.innerHTML = '';
+    });
+
+    if (distribution.length === 0) {
+        const noDistributionRow = document.createElement('tr');
+        const noDistributionCell = document.createElement('td');
+        noDistributionCell.textContent = 'No distribution made yet to branch';
+        noDistributionCell.colSpan = 3; // Span across all columns
+        noDistributionCell.style.border = '1px solid #ddd'; // Border style
+        noDistributionCell.style.padding = '8px'; // Padding
+        noDistributionCell.style.textAlign = 'center'; // Center align the text
+        noDistributionRow.appendChild(noDistributionCell);
+        tableDist.appendChild(noDistributionRow);
+    } else {
+        distribution.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+            <td style="border: 1px solid #ddd; padding: 8px;">${item.product}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">${item.branch}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">${item.stock}</td>`;
+            tableDist.appendChild(row);
+        });
+    }
+}
+
+
+
+
+    function showBranch(url,url1) {
+        console.log(url);
+        console.log(url1);
+
+        $('#modal-branch').modal('show');
+        $('#modal-branch .modal-title').text('Product Distribution To Branch');
+
+        $('#modal-branch form')[0].reset();
+        $('#modal-branch form').attr('action', url);
+        $('#modal-branch [name=_method]').val('put');
+        $('#modal-branch [name=nama_produk]').focus();
+
+        $.get(url1)
+            .done((response) => {
+                console.log(response);
+                $('#modal-branch [name=nama_produk]').val(response.nama_produk);
+                $('#modal-branch [name=id_kategori]').val(response.id_kategori);
+                $('#modal-branch [name=merk]').val(response.merk);
+                $('#modal-branch [name=harga_beli]').val(response.harga_beli);
+                $('#modal-branch [name=harga_jual]').val(response.harga_jual);
+                $('#modal-branch [name=diskon]').val(response.diskon);
+                $('#modal-branch [name=stok]').val(response.stok);
+            })
+            .fail((errors) => {
+                alert('Unable to display data');
+                return;
+            });
+
+
+            $.get(url)
+            .done((response) => {
+                console.log("stock url ",response);
+                distribution = response
+                
+            })
+            .fail((errors) => {
+                alert('Unable to display data');
+                return;
+            });
+
     }
 
     function deleteData(url) {

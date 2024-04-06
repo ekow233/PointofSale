@@ -39,7 +39,7 @@
 <!-- visit "codeastro" for more projects! -->
 @includeIf('pembelian.supplier')
 @includeIf('pembelian.detail')
-@includeIf('pembelian.branch')
+
 @endsection
 
 @push('scripts')
@@ -94,13 +94,7 @@
         table1.ajax.reload();
     }
 
-    function showBranch(url) {
-        console.log("hi");
-        $('#modal-branch').modal('show');
-
-        // table1.ajax.url(url);
-        // table1.ajax.reload();
-    }
+    
 
     function deleteData(url) {
         if (confirm('Are you sure you want to delete selected data?')) {

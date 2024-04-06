@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\kategori;
 use Illuminate\Http\Request;
 use App\Models\Produk;
+use Illuminate\Support\Facades\DB;
 use PDF;
 
 class ProdukController extends Controller
@@ -53,6 +54,7 @@ class ProdukController extends Controller
                 <div class="btn-group">
                     <button type="button" onclick="editForm(`'. route('produk.update', $produk->id_produk) .'`)" class="btn btn-xs btn-primary btn-flat"><i class="fa fa-pencil"></i></button>
                     <button type="button" onclick="deleteData(`'. route('produk.destroy', $produk->id_produk) .'`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
+                    <button type="button" onclick="showBranch(`'. route('produk.stock', $produk->id_produk) .'`,`'. route('produk.update', $produk->id_produk) .'`)" class="btn btn-xs btn-primary btn-flat"><i class="fa fa-info-circle"></i></button>
                 </div>
                 ';
             })
